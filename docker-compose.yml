@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  cmsinstrument:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: cmsinstrument
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: cmsinstrument-nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - cmsinstrument
